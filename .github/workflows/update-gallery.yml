@@ -14,17 +14,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate gallery.js files
+      - name: Generate gallery.js files for all folders
         run: |
-          # List of subfolders you want to include
-          for folder in uploads football cars nature; do
-            mkdir -p jpg/$folder
-            output="gallery-${folder}.js"
-            echo "const images = [" > $output
-            find jpg/$folder -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
+          declare -a folders=("uploads" "football" "cars" "nature")
+
+          for folder in "${folders[@]}"; do
+            if [ -d "jpg/$folder" ]; then
+              output="gallery-${folder}.js"
+              echo "const images = [" > $output
+              find "jpg/$folder" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
               | sort -r \
               | sed 's/^/  \"/; s/$/\",/' >> $output
-            echo "];" >> $output
+              echo "];" >> $output
+              echo "✅ Created $output"
+            fi
           done
 
       - name: Commit and push changes
