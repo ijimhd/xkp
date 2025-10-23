@@ -65,7 +65,7 @@ a:hover{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 3em;
+  font-size: 2.5em;
 }
 
 .hero-title{
@@ -147,7 +147,7 @@ a:hover{
   .hero-text{
     align-items: center;
     padding-top: 20vw;
-    font-size: 9vw;
+    font-size: 8vw;
     gap: 2vw;
   }
 
