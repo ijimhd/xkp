@@ -41,14 +41,6 @@ a{
   font-family: "Source Sans 3", sans-serif;
 }
 
-.header-logo{
-  font-weight: 400;
-  font-size: 2vw;
-  font-family: "Source Sans 3", sans-serif;
-  position: absolute;
-  left: 10vw;
-}
-
 a:hover{
   color: #ff8c00;
 }
@@ -168,12 +160,6 @@ a:hover{
 
   .header-container{
     justify-content: flex-start;
-  }
-
-  .header-logo{
-    position: static;
-    margin-right: auto;
-    font-size: 1em;
   }
 
   .links-container{
