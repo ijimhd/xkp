@@ -17,7 +17,7 @@ jobs:
       - name: Generate gallery.js
         run: |
           echo "const images = [" > gallery.js
-          find jpg -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
+          find jpg/uploads -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
           | sort -r \
           | sed 's/^/  \"/; s/$/\",/' >> gallery.js
           echo "];" >> gallery.js
