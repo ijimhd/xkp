@@ -1,0 +1,258 @@
+*{    
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body{
+  background-color: black;
+  color: white;
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.header-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 10vw;
+}
+
+.links-container{
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+#sidebar-active,
+.open-sidebar-button, .close-sidebar-button{
+  display: none;
+}
+
+svg{
+  fill: white;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+  font-weight: 400;
+  font-family: "Source Sans 3", sans-serif;
+}
+
+.header-logo{
+  font-weight: 400;
+  font-size: 2vw;
+  font-family: "Source Sans 3", sans-serif;
+  position: absolute;
+  left: 10vw;
+}
+
+a:hover{
+  color: #ff8c00;
+}
+
+.background{
+  background-image: url(./jpg/home.webp);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: auto;
+}
+
+.home-page{
+  position: relative;
+  text-align: center;
+}
+
+.hero-text{
+  display: flex;
+  gap: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+}
+
+.hero-title{
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+}
+
+.sports-container{
+  display: flex;
+  justify-content: center;
+  padding: 10vw;
+  gap: 5vw;
+}
+
+.content{
+  display:flex;
+  padding: 5vw 10vh;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+}
+
+.image {
+  display: block;
+  width: 30vw;
+  height: auto;
+  border-radius: 10px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.football-text {
+  color: white;
+  font-size: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.football-button{
+  display: none;
+}
+
+#gallery img {
+  border-radius: 0.5rem; /* rounded corners */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* soft shadow */
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+#gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+@media screen and (max-width: 900px){
+
+  .header-container{
+    padding: 0 0 0 20px;
+  }
+
+  .hero-text{
+    align-items: center;
+    padding-top: 20vw;
+    font-size: 9vw;
+    gap: 2vw;
+  }
+
+  .header-container{
+    justify-content: flex-start;
+  }
+
+  .header-logo{
+    position: static;
+    margin-right: auto;
+    font-size: 1em;
+  }
+
+  .links-container{
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
+    transition: 0.50s ease-out;
+    gap: 5px;
+    padding: 0 0 0 20px;
+  }
+
+  a.nav-link{
+    height: auto;
+    margin-block: 0.7em;
+    text-align: center;
+    font-size: 1.4em;
+  }
+
+  .open-sidebar-button, .close-sidebar-button{
+    padding: 20px;
+    display: block;
+  }
+
+  .close-sidebar-button{
+    margin-left:auto;
+  }
+
+  #sidebar-active:checked ~ .links-container{
+    right: 0;
+  }
+
+  #sidebar-active:checked ~ #overlay{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+  }
+
+  .content{
+    padding: 10vh;
+  }
+  .image {
+    width: 70vw;
+  }
+
+  .overlay{
+    display: none;
+  }
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7vw;
+  }
+
+  .football-button{
+    display: block;
+    background-color: white;
+    padding: 2vw 5vw;
+    color: black;
+    border-radius: 10px;
+    font-size: 5vw;
+  }
+
+  .gallery{
+    gap: 5vw;
+    margin-top: 8vw;
+  }
+  .gallery-image{
+    width: 90%;
+  }
+}
