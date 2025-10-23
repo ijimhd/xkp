@@ -16,7 +16,7 @@ jobs:
 
       - name: Generate gallery.js files for all folders
         run: |
-          declare -a folders=("uploads" "football" "cars" "nature")
+          declare -a folders=("champions" "europa" "conference" "super")
 
           for folder in "${folders[@]}"; do
             if [ -d "jpg/$folder" ]; then
