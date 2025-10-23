@@ -1,0 +1,31 @@
+name: Update Gallery-conference
+
+on:
+  push:
+    paths:
+      - 'jpg/uploads/conference/**'
+  workflow_dispatch:
+
+jobs:
+  update-gallery:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate gallery-conference.js
+        run: |
+          echo "const images = [" > gallery-conference.js
+          find jpg/uploads/conference -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
+          | sort -r \
+          | sed 's/^/  \"/; s/$/\",/' >> gallery-conference.js
+          echo "];" >> gallery-conference.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add gallery-conference.js
+          git commit -m "Update gallery-conference.js automatically" || echo "No changes to commit"
+          git push

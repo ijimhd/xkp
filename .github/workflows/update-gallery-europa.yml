@@ -1,0 +1,31 @@
+name: Update Gallery-europa
+
+on:
+  push:
+    paths:
+      - 'jpg/uploads/europa/**'
+  workflow_dispatch:
+
+jobs:
+  update-gallery:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate gallery-europa.js
+        run: |
+          echo "const images = [" > gallery-europa.js
+          find jpg/uploads/europa -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
+          | sort -r \
+          | sed 's/^/  \"/; s/$/\",/' >> gallery-europa.js
+          echo "];" >> gallery-europa.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add gallery-europa.js
+          git commit -m "Update gallery-europa.js automatically" || echo "No changes to commit"
+          git push
