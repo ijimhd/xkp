@@ -152,7 +152,7 @@ a:hover{
   }
 
   .header-container{
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   .links-container{
