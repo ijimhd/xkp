@@ -1,0 +1,36 @@
+name: Update Galleries
+
+on:
+  push:
+    paths:
+      - 'jpg/**'
+  workflow_dispatch:
+
+jobs:
+  update-galleries:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate gallery.js files
+        run: |
+          # List of subfolders you want to include
+          for folder in uploads football cars nature; do
+            mkdir -p jpg/$folder
+            output="gallery-${folder}.js"
+            echo "const images = [" > $output
+            find jpg/$folder -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
+              | sort -r \
+              | sed 's/^/  \"/; s/$/\",/' >> $output
+            echo "];" >> $output
+          done
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gallery-*.js
+          git diff-index --quiet HEAD || git commit -m "Update all gallery files automatically"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
