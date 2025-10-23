@@ -9,7 +9,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
         <div class="header-container">
@@ -26,30 +25,59 @@
                 <a class="nav-link nav-item" href="./football.html">FOOTBALL</a>
             </div>
         </div>
-        <div class="max-w-6xl mx-auto px-6 py-10">
-            <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6"></div>
+        <div class="leagues">
+            <div class="champions">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./champions.html">
+                            <img src="./jpg/football-menu.jpeg" alt="Avatar" class="image">
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Champions League</div>
+                            </div>
+                        </a>
+                        <a class="football-button" href="./champions.html">Champions League</a>
+                    </div>
+                </div>
+            </div>
+            <div class="europa">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./europa.html">
+                            <img src="./jpg/europa.jpg" alt="Avatar" class="image">
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Europa League</div>
+                            </div>
+                        </a>
+                        <a class="football-button" href="./europa.html">Europa League</a>
+                    </div>
+                </div>
+            </div>
+            <div class="conference">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./conference.html">
+                            <img src="./jpg/football-menu.jpeg" alt="Avatar" class="image">
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Conference League</div>
+                            </div>
+                        </a>
+                        <a class="football-button" href="./conference.html">Conference League</a>
+                    </div>
+                </div>
+            </div>
+            <div class="super">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./super.html">
+                            <img src="./jpg/super.jpg" alt="Avatar" class="image">
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Super League</div>
+                            </div>
+                        </a>
+                        <a class="football-button" href="./super.html">Super League</a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <script src="gallery.js"></script>
-        <script>
-        const gallery = document.getElementById("gallery");
-
-        // Shuffle function (Fisher–Yates shuffle)
-        function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-        }
-
-        // Shuffle images before displaying
-        shuffleArray(images).forEach(name => {
-        const img = document.createElement("img");
-        img.src = name;
-        img.className = "w-full h-auto rounded-lg shadow-md object-cover";
-        gallery.appendChild(img);
-        });
-        </script>
     </body>
 </html>

@@ -138,6 +138,23 @@ a:hover{
   height: auto;
 }
 
+.leagues{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3vw;
+  margin-inline: 8vw;
+  margin-block: 3vw;
+}
+
+.leagues-content{
+  padding: 0px;
+}
+
+.football-league-text{
+  font-size: 40px;
+}
+
 @media screen and (max-width: 900px){
 
   .header-container{
