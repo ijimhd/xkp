@@ -32,24 +32,34 @@
 
         <script src="gallery-champions.js"></script>
         <script>
-        const gallery = document.getElementById("gallery");
+            document.addEventListener("DOMContentLoaded", () => {
+            const gallery = document.getElementById("gallery");
 
-        // Shuffle function (Fisher–Yates shuffle)
-        function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-        }
+            // Fisher–Yates shuffle (fast, unbiased)
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
 
-        // Shuffle images before displaying
-        shuffleArray(images).forEach(name => {
-        const img = document.createElement("img");
-        img.src = name;
-        img.className = "w-full h-auto rounded-lg shadow-md object-cover";
-        gallery.appendChild(img);
-        });
+            // Shuffle first, then create image elements
+            const shuffled = shuffleArray([...images]); // copy to avoid modifying the original
+            const fragment = document.createDocumentFragment(); // improves performance
+
+            shuffled.forEach(name => {
+                const img = document.createElement("img");
+                img.src = name;
+                img.loading = "lazy"; // improves page load time
+                img.className = "w-full h-auto rounded-lg shadow-md object-cover";
+                fragment.appendChild(img);
+            });
+
+            // Append all at once (after shuffle)
+            gallery.appendChild(fragment);
+            });
         </script>
+
     </body>
 </html>
