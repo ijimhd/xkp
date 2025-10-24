@@ -34,7 +34,14 @@
         <div class="content">
             <div class="container">
                 <a href="./football.html">
-                    <img src="./jpg/champions-desktop.webp" alt="Responsive image" class="image">
+                    <picture>
+                        <!-- Image for mobile -->
+                        <source srcset="./jpg/champions-mobile-menu.webp" media="(max-width: 767px)" class="image">
+                        <!-- Image for desktop -->
+                        <source srcset="./jpg/champions-desktop.webp" media="(min-width: 768px)" class="image">
+                        <!-- Fallback (for browsers that don’t support <picture>) -->
+                        <img src="./jpg/champions-mobile-menu.webp" alt="Responsive image" class="image">
+                    </picture>
                     <div class="overlay">
                         <div class="football-text">Football</div>
                     </div>
