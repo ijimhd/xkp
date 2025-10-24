@@ -33,34 +33,52 @@
         <script src="gallery-super.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-            const gallery = document.getElementById("gallery");
-    
-            // Fisher–Yates shuffle (fast, unbiased)
-            function shuffleArray(array) {
+              const gallery = document.getElementById("gallery");
+            
+              function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [array[i], array[j]] = [array[j], array[i]];
                 }
                 return array;
-            }
-    
-            // Shuffle first, then create image elements
-            const shuffled = shuffleArray([...images]); // copy to avoid modifying the original
-            const fragment = document.createDocumentFragment(); // improves performance
-    
-            shuffled.forEach(name => {
-                const img = document.createElement("img");
-                img.src = name;
-                img.loading = "lazy"; // improves page load time
-                img.className = "w-full h-auto rounded-lg shadow-md object-cover";
-
-                img.onload = () => img.classList.add("loaded");
-                fragment.appendChild(img);
+              }
+            
+              // Shuffle first
+              const shuffled = shuffleArray([...images]);
+            
+              // Preload all images first
+              const preloadImages = shuffled.map(src => {
+                return new Promise(resolve => {
+                  const img = new Image();
+                  img.src = src;
+                  img.onload = () => resolve(img);
+                  img.onerror = () => resolve(null);
+                });
+              });
+            
+              Promise.all(preloadImages).then(loadedImages => {
+                const fragment = document.createDocumentFragment();
+            
+                loadedImages.forEach(img => {
+                  if (img) {
+                    img.loading = "lazy";
+                    img.className = "w-full h-auto rounded-lg shadow-md object-cover";
+                    img.classList.add("fade-in-start"); // start invisible
+                    fragment.appendChild(img);
+                  }
+                });
+            
+                // Append all at once after preload
+                gallery.appendChild(fragment);
+            
+                // Trigger fade-in animation slightly delayed
+                requestAnimationFrame(() => {
+                  document.querySelectorAll(".fade-in-start").forEach(img => {
+                    img.classList.add("loaded");
+                  });
+                });
+              });
             });
-    
-            // Append all at once (after shuffle)
-            gallery.appendChild(fragment);
-            });
-            </script>
+        </script>
     </body>
 </html>
