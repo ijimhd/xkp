@@ -53,6 +53,8 @@
                 img.src = name;
                 img.loading = "lazy"; // improves page load time
                 img.className = "w-full h-auto rounded-lg shadow-md object-cover";
+
+                img.onload = () => img.classList.add("loaded");
                 fragment.appendChild(img);
             });
 
