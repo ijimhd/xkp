@@ -1,6 +1,14 @@
 const images = [
   "jpg/super/image3.jpeg",
+  "jpg/super/_DSC9999-min.jpg",
+  "jpg/super/_DSC9920-min.jpg",
+  "jpg/super/_DSC9884-min.jpg",
+  "jpg/super/_DSC9824-Edit-min-min.jpg",
+  "jpg/super/_DSC9801-min.jpg",
   "jpg/super/_DSC9277-min.jpg",
+  "jpg/super/_DSC8760-min.jpg",
+  "jpg/super/_DSC8304-min.jpg",
+  "jpg/super/_DSC7380-min.jpg",
   "jpg/super/_DSC5719-min.jpg",
   "jpg/super/_DSC5687-min.jpg",
   "jpg/super/_DSC5560-min.jpg",
@@ -20,5 +28,6 @@ const images = [
   "jpg/super/_DSC0254-min.jpg",
   "jpg/super/_DSC0225-min.jpg",
   "jpg/super/_DSC0199-min.jpg",
+  "jpg/super/_DSC0198-min.jpg",
   "jpg/super/_DSC0054-min.jpg",
 ];
