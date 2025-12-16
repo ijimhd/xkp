@@ -6,4 +6,9 @@ const images = [
   "jpg/conference/_DSC6872-min.jpg",
   "jpg/conference/_DSC6778-min.jpg",
   "jpg/conference/_DSC6670-min.jpg",
+  "jpg/conference/_DSC1727-min.jpg",
+  "jpg/conference/_DSC1619-min.jpg",
+  "jpg/conference/_DSC1483-min.jpg",
+  "jpg/conference/_DSC1312-min.jpg",
+  "jpg/conference/_DSC1259-min.jpg",
 ];
