@@ -283,6 +283,10 @@ a:hover{
     width: 70vw;
   }
 
+  .background{
+  background-image: url(./jpg/home-mobile.webp);
+  }
+
   .overlay{
     display: none;
   }
