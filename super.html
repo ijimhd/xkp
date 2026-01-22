@@ -30,55 +30,131 @@
             <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6"></div>
         </div>
 
+        <div id="lightbox" class="lightbox hidden">
+          <button class="lightbox-close" aria-label="Close image">&times;</button>
+          <img id="lightbox-img" alt="">
+        </div>
+
+
         <script src="gallery-super.js"></script>
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              const gallery = document.getElementById("gallery");
-            
-              function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                  const j = Math.floor(Math.random() * (i + 1));
-                  [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
+        document.addEventListener("DOMContentLoaded", () => {
+          const gallery = document.getElementById("gallery");
+          const lightbox = document.getElementById("lightbox");
+          const lightboxImg = document.getElementById("lightbox-img");
+          const closeBtn = document.querySelector(".lightbox-close");
+
+          function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          }
+
+          function netlifyImage(src, width) {
+            return `/.netlify/images?url=${encodeURIComponent(src)}&w=${width}`;
+          }
+
+          const widths = [400, 600, 800, 1000, 1200, 1600, 2000];
+
+          const shuffled = shuffleArray([...images]);
+
+          const preloadImages = shuffled.map(src => {
+            return new Promise(resolve => {
+              const img = new Image();
+              img.src = netlifyImage(src, 800);
+              img.onload = () => resolve(src);
+              img.onerror = () => resolve(null);
+            });
+          });
+
+          Promise.all(preloadImages).then(readyImages => {
+            const fragment = document.createDocumentFragment();
+
+            readyImages.forEach(src => {
+              if (!src) return;
+
+              const img = document.createElement("img");
+
+              img.src = netlifyImage(src, 800);
+              img.srcset = widths.map(w => `${netlifyImage(src, w)} ${w}w`).join(", ");
+              img.sizes = `
+                (max-width: 640px) 95vw,
+                (max-width: 1024px) 45vw,
+                (max-width: 1600px) 30vw,
+                25vw
+              `;
+
+              img.loading = "lazy";
+              img.className = "w-full h-auto rounded-lg shadow-md object-cover fade-in-start";
+              img.style.cursor = "zoom-in";
+
+              img.addEventListener("click", () => {
+              const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+              // Open overlay FIRST
+              lightbox.classList.remove("hidden");
+              document.body.style.overflow = "hidden";
+
+              // Reset state
+              lightboxImg.classList.add("loading");
+
+              // MOBILE: reuse existing image completely
+              if (isMobile) {
+                lightboxImg.src = img.src;
+                lightboxImg.classList.remove("loading");
+                return;
               }
-            
-              // Shuffle first
-              const shuffled = shuffleArray([...images]);
-            
-              // Preload all images first
-              const preloadImages = shuffled.map(src => {
-                return new Promise(resolve => {
-                  const img = new Image();
-                  img.src = src;
-                  img.onload = () => resolve(img);
-                  img.onerror = () => resolve(null);
-                });
-              });
-            
-              Promise.all(preloadImages).then(loadedImages => {
-                const fragment = document.createDocumentFragment();
-            
-                loadedImages.forEach(img => {
-                  if (img) {
-                    img.loading = "lazy";
-                    img.className = "w-full h-auto rounded-lg shadow-md object-cover";
-                    img.classList.add("fade-in-start"); // start invisible
-                    fragment.appendChild(img);
-                  }
-                });
-            
-                // Append all at once after preload
-                gallery.appendChild(fragment);
-            
-                // Trigger fade-in animation slightly delayed
-                requestAnimationFrame(() => {
-                  document.querySelectorAll(".fade-in-start").forEach(img => {
-                    img.classList.add("loaded");
-                  });
-                });
+
+              // DESKTOP: show same visual size immediately
+              lightboxImg.src = img.src;
+
+              // Load higher-res version IN PLACE
+              const highRes = new Image();
+              highRes.src = netlifyImage(src, 1600);
+
+              highRes.onload = () => {
+                /* 
+                  🔥 This swaps pixel data WITHOUT changing layout
+                */
+                lightboxImg.src = highRes.src;
+                lightboxImg.classList.remove("loading");
+              };
+            });
+
+
+
+
+              fragment.appendChild(img);
+            });
+
+            gallery.appendChild(fragment);
+
+            requestAnimationFrame(() => {
+              document.querySelectorAll(".fade-in-start").forEach(img => {
+                img.classList.add("loaded");
               });
             });
+          });
+
+          // ❌ CLOSE LIGHTBOX
+          function closeLightbox() {
+            lightbox.classList.add("hidden");
+            lightboxImg.src = "";
+            document.body.style.overflow = "";
+          }
+
+          closeBtn.addEventListener("click", closeLightbox);
+
+          lightbox.addEventListener("click", e => {
+            if (e.target === lightbox) closeLightbox();
+          });
+
+          document.addEventListener("keydown", e => {
+            if (e.key === "Escape") closeLightbox();
+          });
+        });
         </script>
     </body>
 </html>
