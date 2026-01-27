@@ -140,20 +140,35 @@ a:hover{
   text-align: center;
 }
 
-#gallery img {
-  border-radius: 0.5rem; /* rounded corners */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* soft shadow */
-  object-fit: cover;
-  width: 100%;
-  height: auto;
-  opacity: 0;
-  transform: scale(0.98);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+/* Wrapper centers the gallery and gives padding */
+.gallery-wrapper {
+  max-width: 1200px; /* limits the gallery width */
+  margin: 0 auto;    /* centers horizontally */
+  padding: 0 20px;   /* space left/right */
+  box-sizing: border-box;
 }
 
-#gallery img.loaded {
-  opacity: 1;
-  transform: scale(1);
+/* Grid: 2 images per row */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 20px; /* space between images */
+}
+
+/* Optional: adjust for smaller screens */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+  }
+}
+
+/* Make images fill their grid cell nicely */
+.gallery img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 8px; /* optional rounded corners */
 }
 
 .leagues{
