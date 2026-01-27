@@ -144,7 +144,7 @@ a:hover{
 .gallery-wrapper {
   max-width: 1200px; /* limits the gallery width */
   margin: 0 auto;    /* centers horizontally */
-  padding: 0 20px;   /* space left/right */
+  padding: 20px;   /* space left/right */
   box-sizing: border-box;
 }
 
