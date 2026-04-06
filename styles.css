@@ -171,7 +171,8 @@ a:hover{
   border-radius: 8px; /* optional rounded corners */
 }
 
-.leagues{
+.leagues,
+.sports-categories{
   display:flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -32,7 +32,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                     </label>                
                     <a class="nav-link nav-item" href="./index.html">HOME</a>
-                    <a class="nav-link nav-item" href="./football.html">FOOTBALL</a>
+                    <a class="nav-link nav-item" href="./pages/football.html">FOOTBALL</a>
+                    <a class="nav-link nav-item" href="./pages/basketball.html">BASKETBALL</a>
                 </div>
             </div>
             <div class="hero-text">
@@ -40,19 +41,35 @@
                 <p class="hero-title">PORTFOLIO</p>
             </div>
         </div>
-        <div class="content">
-            <div class="container">
-                <a href="./football.html">
+        <div class="sports-categories content">
+            <div class="football-container container">
+                <a href="./pages/football.html">
                     <picture>
                         <!-- Image for mobile -->
-                        <source srcset="./jpg/champions-mobile-menu.webp" media="(max-width: 900px)" class="image">
+                        <source srcset="../jpg/champions-mobile-menu.webp" media="(max-width: 900px)" class="image">
                         <!-- Image for desktop -->
-                        <source srcset="./jpg/champions-desktop.webp" media="(min-width: 899px)" class="image">
+                        <source srcset="../jpg/champions-desktop.webp" media="(min-width: 899px)" class="image">
                         <!-- Fallback (for browsers that don’t support <picture>) -->
-                        <img src="./jpg/champions-mobile-menu.webp" alt="Responsive image" class="image">
+                        <img src="../jpg/champions-mobile-menu.webp" alt="Responsive image" class="image">
                     </picture>
                     <div class="overlay">
                         <div class="football-text">Football</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="basketball-container container">
+                <a href="./pages/basketball.html">
+                    <picture>
+                        <!-- Image for mobile -->
+                        <source srcset="../jpg/champions-mobile-menu.webp" media="(max-width: 900px)" class="image">
+                        <!-- Image for desktop -->
+                        <source srcset="../jpg/champions-desktop.webp" media="(min-width: 899px)" class="image">
+                        <!-- Fallback (for browsers that don’t support <picture>) -->
+                        <img src="../jpg/champions-mobile-menu.webp" alt="Responsive image" class="image">
+                    </picture>
+                    <div class="overlay">
+                        <div class="football-text">Basketball</div>
                     </div>
                 </a>
             </div>

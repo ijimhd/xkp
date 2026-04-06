@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="el">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="xkpfoto">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Xkpfoto</title>
+        <link rel="stylesheet" href="../styles.css">
+        <link rel="preload"
+              href="../fonts/PlayfairDisplay-ExtraBold.woff2"
+              as="font"
+              type="font/woff2"
+              crossorigin>
+
+        <link rel="preload"
+              href="../fonts/SourceSans3-Regular.woff2"
+              as="font"
+              type="font/woff2"
+              crossorigin>
+        <link rel="icon" type="image/svg+xml" href="../jpg/favicon.svg" />
+    </head>
+    <body>
+        <div class="header-container">
+            <input type="checkbox" id="sidebar-active">
+            <label for="sidebar-active" class="open-sidebar-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+            </label>
+            <label id="overlay" for="sidebar-active"></label>
+            <div class="links-container">
+                <label for="sidebar-active" class="close-sidebar-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                </label>                
+                <a class="nav-link nav-item" href="../index.html">HOME</a>
+                <a class="nav-link nav-item" href="./football.html">FOOTBALL</a>
+                <a class="nav-link nav-item" href="./basketball.html">BASKETBALL</a>
+            </div>
+        </div>
+        <div class="leagues">
+            <div class="champions">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./champions.html">
+                            <picture>
+                                <!-- Image for mobile -->
+                                <source srcset="../jpg/champions.webp" media="(max-width: 900px)" class="image">
+                                <!-- Image for desktop -->
+                                <source srcset="../jpg/champions-desktop.webp" media="(min-width: 899px)" class="image">
+                                <!-- Fallback (for browsers that don’t support <picture>) -->
+                                <img src="./jpg/champions-desktop.webp" alt="Responsive image" class="image">
+                            </picture>
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Champions League</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="europa">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./europa.html">
+                            <picture>
+                                <!-- Image for mobile -->
+                                <source srcset="../jpg/europa.webp" media="(max-width: 900px)" class="image">
+                                <!-- Image for desktop -->
+                                <source srcset="../jpg/europa-desktop.webp" media="(min-width: 899px)" class="image">
+                                <!-- Fallback (for browsers that don’t support <picture>) -->
+                                <img src="../jpg/europa-desktop.webp" alt="Responsive image" class="image">
+                            </picture>
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Europa League</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="conference">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./conference.html">
+                            <picture>
+                                <!-- Image for mobile -->
+                                <source srcset="../jpg/conference.webp" media="(max-width: 900px)" class="image">
+                                <!-- Image for desktop -->
+                                <source srcset="../jpg/conference-desktop.webp" media="(min-width: 899px)" class="image">
+                                <!-- Fallback (for browsers that don’t support <picture>) -->
+                                <img src="../jpg/conference-desktop.webp" alt="Responsive image" class="image">
+                            </picture>
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Conference League</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="super">
+                <div class="leagues-content content">
+                    <div class="container">
+                        <a href="./super.html">
+                            <picture>
+                                <!-- Image for mobile -->
+                                <source srcset="../jpg/super.webp" media="(max-width: 900px)" class="image">
+                                <!-- Image for desktop -->
+                                <source srcset="../jpg/super-desktop.webp" media="(min-width: 899px)" class="image">
+                                <!-- Fallback (for browsers that don’t support <picture>) -->
+                                <img src="../jpg/super-desktop.webp" alt="Responsive image" class="image">
+                            </picture>
+                            <div class="overlay">
+                                <div class="football-league-text football-text">Super League</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
