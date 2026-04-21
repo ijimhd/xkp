@@ -1,5 +1,10 @@
 const images = [
   "jpg/super/image3.jpeg",
+  "jpg/super/_XKP6450.jpg",
+  "jpg/super/_XKP6443.jpg",
+  "jpg/super/_XKP5009.jpg",
+  "jpg/super/_XKP5001.jpg",
+  "jpg/super/_XKP4999.jpg",
   "jpg/super/_DSC9999-min.jpg",
   "jpg/super/_DSC9920-min.jpg",
   "jpg/super/_DSC9884-min.jpg",
