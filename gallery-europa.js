@@ -1,4 +1,6 @@
 const images = [
+  "jpg/europa/_DSC5506.jpg",
+  "jpg/europa/_DSC4976.jpg",
   "jpg/europa/_DSC2034-min.jpg",
   "jpg/europa/_DSC1924-min.jpg",
   "jpg/europa/_DSC1739-min.jpg",
