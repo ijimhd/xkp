@@ -10,33 +10,40 @@ jobs:
   update-galleries:
     runs-on: ubuntu-latest
 
+    # This ensures the bot has permission to push the files back to your repo
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Generate gallery.js files
         run: |
-          # 1. Ensure the target directory exists
+          # 1. Define and create the target folder
           TARGET_DIR="js/football"
           mkdir -p "$TARGET_DIR"
 
+          # 2. List of subfolders in 'jpg/' to process
           declare -a folders=("champions" "europa" "conference" "super")
 
           for folder in "${folders[@]}"; do
-            # 2. Check the source folder (case-sensitive!)
+            # 3. Check if the folder exists in your repo
             if [ -d "jpg/$folder" ]; then
               output="$TARGET_DIR/gallery-${folder}.js"
-
+              
               echo "const images = [" > "$output"
-
-              # 3. Find images in jpg/ and write paths to the .js file
-              # Note: This keeps paths as "jpg/folder/image.jpg"
+              
+              # 4. Find images. We use -printf to ensure the path starts with /
+              # This helps the Netlify Image helper find the file from any page depth
               find "jpg/$folder" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
               | sort -r \
-              | sed 's/^/  \"/; s/$/\",/' >> "$output"
-
+              | sed 's/^/  \"\//; s/$/\",/' >> "$output"
+              
               echo "];" >> "$output"
               echo "✅ Created $output"
+            else
+              echo "⚠️ Folder jpg/$folder not found, skipping."
             fi
           done
 
@@ -44,9 +51,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # 4. Stage specifically the new files
-          git add js/football/*.js
-
-          git diff-index --quiet HEAD || git commit -m "Auto-update gallery JS files"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+          
+          # 5. Add only the files in the football folder
+          git add js/football/gallery-*.js
+          
+          git diff-index --quiet HEAD || git commit -m "Auto-update gallery JS files in js/football"
+          git push origin HEAD:${{ github.ref }}
