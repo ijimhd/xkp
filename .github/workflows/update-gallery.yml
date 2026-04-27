@@ -14,27 +14,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate gallery.js files in js/football
+      - name: Generate gallery.js files
         run: |
-          # The directory where the .js files will live
+          # 1. Ensure the target directory exists
           TARGET_DIR="js/football"
           mkdir -p "$TARGET_DIR"
 
           declare -a folders=("champions" "europa" "conference" "super")
 
           for folder in "${folders[@]}"; do
+            # 2. Check the source folder (case-sensitive!)
             if [ -d "jpg/$folder" ]; then
-              # The .js file is created in js/football/
               output="$TARGET_DIR/gallery-${folder}.js"
 
               echo "const images = [" > "$output"
-              # The find command still looks in jpg/ and keeps those paths
+
+              # 3. Find images in jpg/ and write paths to the .js file
+              # Note: This keeps paths as "jpg/folder/image.jpg"
               find "jpg/$folder" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) \
               | sort -r \
               | sed 's/^/  \"/; s/$/\",/' >> "$output"
-              echo "];" >> "$output"
 
-              echo "✅ Created $output (pointing to jpg/$folder)"
+              echo "];" >> "$output"
+              echo "✅ Created $output"
             fi
           done
 
@@ -43,8 +45,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add the new .js files
-          git add js/football/gallery-*.js
+          # 4. Stage specifically the new files
+          git add js/football/*.js
 
-          git diff-index --quiet HEAD || git commit -m "Update football gallery files in js/football"
+          git diff-index --quiet HEAD || git commit -m "Auto-update gallery JS files"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
