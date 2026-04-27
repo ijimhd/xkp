@@ -94,9 +94,9 @@ function shuffleArray(array) {
   return array;
 }
 
-// Netlify image helper
 function netlifyImage(src, width) {
-  return `/.netlify/images?url=${encodeURIComponent(src)}&w=${width}`;
+  // Adding &fm=webp tells Netlify to convert the image on the fly
+  return `/.netlify/images?url=${encodeURIComponent(src)}&w=${width}&fm=webp`;
 }
 
 // ----- LIGHTBOX FUNCTIONS -----
