@@ -134,12 +134,14 @@ a:hover{
   color: rgb(98, 98, 98);
 }
 
-.background{
-  background-image: url(./jpg/home.webp);
-  background-size: cover;
-  background-position: center;
+.background {
+  /* Remove the background-image line */
+  position: relative;
   height: 100vh;
-  width: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Keep your other layout styles */
 }
 
 .home-page{
@@ -431,10 +433,6 @@ a:hover{
   }
   .image {
     width: 70vw;
-  }
-
-  .background{
-  background-image: url(./jpg/home-mobile.webp);
   }
 
   .overlay{
