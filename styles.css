@@ -49,58 +49,69 @@ body{
   margin-right: auto;
 }
 
-/* The container */
-.dropdown-wrapper {
-    position: relative;
-    display: inline-block;
+.dropdown-container {
+  position: relative; /* Crucial for positioning the menu */
+  display: inline-block;
 }
 
-/* The Dropdown Menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Touching the bottom of the link */
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* The Bridge: This creates the "gap" visually but keeps it clickable */
+  padding-top: 15px; 
+  z-index: 100;
+}
+
+/* The container for the links */
 .dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 280px;
-    background-color: #ffffff;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    border-radius: 4px;
-
-    /* 1. POSITIONING & CENTERING */
-    left: 50%;
-    transform: translateX(-50%);
-    
-    /* 2. THE GAP: This pushes the visual menu down 15px */
-    margin-top: 15px; 
+  background-color: #1a1a1a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden; /* Ensures the hover background doesn't bleed past corners */
+  min-width: 180px;
 }
 
-/* 3. THE INVISIBLE BRIDGE (No Dead Spot) */
-/* This creates an invisible rectangle above the menu that fills the margin-top gap */
-.dropdown-content::before {
-    content: "";
-    position: absolute;
-    top: -15px;      /* Matches the margin-top exactly */
-    left: 0;
-    width: 100%;
-    height: 15px;    /* Matches the margin-top exactly */
-    background: transparent; /* Invisible but hoverable */
+/* Individual link styling */
+.dropdown-content a {
+  padding: 12px 20px;
+  text-decoration: none;
+  transition: background-color 0.2s ease; /* Smooth color transition */
+  font-size: 20px;
+  text-align: center;
 }
 
-/* 4. HOVER LOGIC */
-.dropdown-wrapper:hover .dropdown-content {
-    display: block;
+/* Change background on hover */
+.dropdown-content a:hover {
+  background-color: #f5f5f5; /* Light grey background */
+  color: black; /* Optional: change text color too */
 }
 
-/* Styling the links */
-.dropdown-link {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: center;
+/* The Separator Line */
+.dropdown-content a:not(:first-child) {
+  border-top: 1px solid #eee; /* Light line between items */
 }
 
-.dropdown-link:hover {
-    background-color: #f1f1f1;
+/* Hover logic: Show when container is hovered */
+.dropdown-container:hover .dropdown-menu {
+  display: flex;
+}
+
+/* Click logic: Show when class is added via JS */
+.dropdown-container.is-active .dropdown-menu {
+  display: flex;
+}
+
+/* Optional: styling the sub-links */
+.dropdown-menu a {
+  padding: 15px;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 #sidebar-active,
@@ -373,6 +384,24 @@ a:hover{
     margin-block: 0.7em;
     text-align: center;
     font-size: 1.4em;
+  }
+
+  .dropdown-container{
+    margin-block: 0.7em;
+  }
+
+
+  .dropdown-menu a{
+    font-size:1em;
+    padding: 20px 30px;
+  }
+
+  a.nav-item-link{
+    font-size: 1.4em;
+  }
+
+  .nav-item-link-container{
+    margin-block: 0.7em;
   }
 
   .open-sidebar-button, .close-sidebar-button{
