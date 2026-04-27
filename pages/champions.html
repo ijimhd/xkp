@@ -105,34 +105,42 @@ function openLightbox(index) {
   const src = shuffled[currentIndex];
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-  lightboxImg.classList.remove("loaded", "slide-left", "slide-right");
+  // 1. Initial State: Show lightbox and lock scroll
   lightbox.classList.remove("hidden");
   document.body.style.overflow = "hidden";
-  lightboxImg.classList.add("loading");
 
+  // 2. Add Blur Styling (matching the gallery grid)
+  lightboxImg.style.filter = "blur(10px)";
+  lightboxImg.style.transition = "filter 0.4s ease-in-out";
 
   if (isMobile) {
-    // Mobile: use medium image
+    // Mobile: Just load the 800px version
     lightboxImg.src = netlifyImage(src, 800);
-    lightboxImg.classList.remove("loading");
+    lightboxImg.onload = () => {
+      lightboxImg.style.filter = "none";
+    };
     return;
   }
 
-  // Desktop: medium first
+  // 3. Desktop: Load 800px version first as a "preview"
+  // This is likely already in the browser cache, so it's instant
   lightboxImg.src = netlifyImage(src, 800);
 
-  // Load high-res
+  // 4. Load High-Res in the background
   const highRes = new Image();
   highRes.src = netlifyImage(src, 1600);
   highRes.onload = () => {
+    // Switch to high-res and clear the blur
     lightboxImg.src = highRes.src;
-    lightboxImg.classList.remove("loading");
+    lightboxImg.style.filter = "none";
   };
 }
 
 function closeLightbox() {
   lightbox.classList.add("hidden");
+  // Clear the src and the filter so it's fresh for the next open
   lightboxImg.src = "";
+  lightboxImg.style.filter = "none"; 
   document.body.style.overflow = "";
 }
 
@@ -211,52 +219,53 @@ function handleSwipe() {
 
 // ----- GALLERY INITIALIZATION -----
 document.addEventListener("DOMContentLoaded", () => {
-  if (!images || !images.length) return;
+  // Check if the 'images' array exists from the gallery-*.js file
+  if (typeof images === 'undefined' || !images.length) {
+    console.error("No images array found. Check your script paths.");
+    return;
+  }
 
+  // Shuffle a copy of the images
   shuffled = shuffleArray([...images]);
 
-  const preloadImages = shuffled.map(src => {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.src = netlifyImage(src, 800);
-      img.onload = () => resolve(src);
-      img.onerror = () => resolve(null);
-    });
+  const fragment = document.createDocumentFragment();
+
+  shuffled.forEach((src, index) => {
+    const img = document.createElement("img");
+    
+    // 1. FAST LOAD: Show a tiny 20px version immediately
+    img.src = netlifyImage(src, 20); 
+    
+    // 2. STYLING: Add the blur and the fade transition
+    img.style.filter = "blur(15px)";
+    img.style.transition = "filter 0.6s ease-in-out";
+    img.style.cursor = "zoom-in";
+    img.className = "w-full h-auto rounded-lg shadow-md object-cover";
+    
+    // 3. RESPONSIVE: Tell the browser which sizes are available
+    img.srcset = [400, 800, 1200, 1600]
+      .map(w => `${netlifyImage(src, w)} ${w}w`)
+      .join(", ");
+    
+    // Match your grid layout (30vw for desktop, 95vw for mobile)
+    img.sizes = "(max-width: 768px) 95vw, 30vw";
+    img.loading = "lazy";
+
+    // 4. SHARPEN: When the real image is ready, remove the blur
+    img.onload = () => {
+      // If the current src is just the 20px placeholder, don't unblur yet
+      if (img.naturalWidth > 20) {
+        img.style.filter = "blur(0)";
+      }
+    };
+
+    img.addEventListener("click", () => openLightbox(index));
+    fragment.appendChild(img);
   });
 
-  Promise.all(preloadImages).then(readyImages => {
-    const fragment = document.createDocumentFragment();
-
-    readyImages.forEach((src, index) => {
-      if (!src) return;
-
-      const img = document.createElement("img");
-      img.src = netlifyImage(src, 800);
-      img.srcset = [400, 600, 800, 1000, 1200, 1600, 2000]
-        .map(w => `${netlifyImage(src, w)} ${w}w`)
-        .join(", ");
-      img.sizes = `
-        (max-width: 640px) 95vw,
-        (max-width: 1024px) 45vw,
-        (max-width: 1600px) 30vw,
-        25vw
-      `;
-      img.loading = "lazy";
-      img.className = "fade-in-start w-full h-auto rounded-lg shadow-md object-cover";
-      img.style.cursor = "zoom-in";
-
-      img.addEventListener("click", () => openLightbox(index));
-      fragment.appendChild(img);
-    });
-
-    gallery.appendChild(fragment);
-
-    requestAnimationFrame(() => {
-      document.querySelectorAll(".fade-in-start").forEach(img => {
-        img.classList.add("loaded");
-      });
-    });
-  });
+  // Clear existing content and append the new images
+  gallery.innerHTML = "";
+  gallery.appendChild(fragment);
 });
 
         </script>
