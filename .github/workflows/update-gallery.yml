@@ -9,6 +9,8 @@ on:
 jobs:
   update-galleries:
     runs-on: ubuntu-latest
+    
+    # Required to allow the bot to push changes back to your repository
     permissions:
       contents: write
 
@@ -18,14 +20,27 @@ jobs:
 
       - name: Generate Gallery JS files
         run: |
-          # Find directories inside jpg, excluding jpg itself
+          # 1. Define the folder name to ignore (where your site UI images live)
+          EXCLUDE_DIR="assets"
+
+          # 2. Find all directories inside jpg, excluding the root itself
           find jpg -mindepth 1 -type d | while read -r dir; do
             
-            # Count images
+            # Get the name of the folder currently being processed
+            folder_name=$(basename "$dir")
+
+            # Skip the folder if it matches our exclude list
+            if [ "$folder_name" = "$EXCLUDE_DIR" ]; then
+              echo "⏭️ Skipping excluded folder: $dir"
+              continue
+            fi
+
+            # 3. Count images in this specific subfolder (ignores images in root jpg/)
             img_count=$(find "$dir" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | wc -l)
             
             if [ "$img_count" -gt 0 ]; then
-              # Define target (e.g., js/football/champions)
+              # Define target directory structure in 'js/' to match 'jpg/'
+              # This turns 'jpg/football/champions' into 'js/football/champions'
               subpath="${dir#jpg/}"
               target_js_dir="js/$subpath"
               mkdir -p "$target_js_dir"
@@ -34,13 +49,16 @@ jobs:
               
               echo "const images = [" > "$output"
               
-              # List images and format for JS array
+              # 4. Generate the image list
+              # Using | as a delimiter in sed to avoid issues with folder slashes
               find "$dir" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) \
               | sort -r \
               | sed 's|^|  "|; s|$|",|' >> "$output"
               
               echo "];" >> "$output"
-              echo "✅ Created $output"
+              echo "✅ Created gallery: $output ($img_count images)"
+            else
+              echo "ℹ️ No images found in $dir, skipping JS creation."
             fi
           done
 
@@ -48,11 +66,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Stage all changes in the js folder
           git add js/
-          # Only commit if there are actually changes to avoid errors
+          
+          # Only commit and push if changes were actually made
           if ! git diff --cached --quiet; then
-            git commit -m "Auto-update gallery JS files"
-            git push
+            git commit -m "Auto-update gallery JS files from jpg/ subfolders"
+            git push origin HEAD:${{ github.ref }}
           else
-            echo "No changes to commit"
+            echo "No changes detected in galleries. Skipping push."
           fi
