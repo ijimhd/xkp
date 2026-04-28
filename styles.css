@@ -482,11 +482,6 @@ a:hover{
     padding-top: 0;
   }
 
-  .dropdown-container{
-    margin-block: 0.7em;
-  }
-
-
   .dropdown-menu a{
     font-size:1em;
     padding: 20px 30px;
