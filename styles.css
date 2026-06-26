@@ -512,7 +512,7 @@ a:hover{
     padding: 10vh;
   }
   .image {
-    width: 45vw;
+    width: 70vw;
   }
 
   .overlay{
@@ -549,7 +549,7 @@ a:hover{
   }
 
   .leagues{
-    margin-bottom: 13vw;
+    margin-block: 13vw;
   }
 
 }
