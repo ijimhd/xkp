@@ -53,7 +53,7 @@
             </ul>
         </div>
         <div class="carousel">
-            <img src="./jpg/football/super/_DSC0264-min.jpg" class="active" alt="Slide 1">
+            <img src="./jpg/football/super/_DSC0264-min.jpg" alt="Slide 1">
             <img src="./jpg/football/super/_DSC1954-Edit.jpg" alt="Slide 2">
             <img src="./jpg/football/super/_DSC8760-min.jpg" alt="Slide 3">
             <img src="./jpg/football/champions/_DSC6240-min.jpg" alt="Slide 4">
@@ -95,19 +95,38 @@
         </div>
         <script src="/js/football/champions/gallery.js"></script>
         <script>
-        (function() {
-            const images = document.querySelectorAll('.carousel img');
-            let currentIndex = 0;
+            (function() {
+                const carousel = document.querySelector('.carousel');
+                const images = Array.from(document.querySelectorAll('.carousel img'));
+                let currentIndex = 0;
 
-            function changeImage() {
-            images[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % images.length;
-            images[currentIndex].classList.add('active');
-            }
+                function shuffleArray(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+                }
 
-            // Change image every 3 seconds
-            setInterval(changeImage, 3000);
-        })();
+                shuffleArray(images).forEach(img => carousel.appendChild(img));
+
+                const shuffled = Array.from(document.querySelectorAll('.carousel img'));
+
+                // Show first image immediately
+                shuffled[0].classList.add('active');
+
+                function changeImage() {
+                shuffled[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % shuffled.length;
+                shuffled[currentIndex].classList.add('active');
+                }
+
+                setTimeout(() => {
+                changeImage();
+                setInterval(changeImage, 3500);
+                }, 1500);
+
+            })();
         </script>
     </body>
 </html>
