@@ -180,7 +180,7 @@ a:hover{
 .carousel {
   position: relative;
   width: auto;
-  height: 100vh; /* Adjust as needed */
+  height: 87vh; /* Adjust as needed */
   overflow: hidden;
 }
 
@@ -551,6 +551,7 @@ a:hover{
 
   .carousel{
     margin-inline: 10px;
+    height: 100vh;
   }
 
   .publication-links{
