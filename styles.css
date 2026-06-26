@@ -180,7 +180,7 @@ a:hover{
 .carousel {
   position: relative;
   width: auto;
-  height: 87vh; /* Adjust as needed */
+  height: 100vh; /* Adjust as needed */
   overflow: hidden;
 }
 
