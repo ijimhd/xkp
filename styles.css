@@ -310,7 +310,7 @@ a:hover{
 .lightbox {
   position: fixed;
   inset: 0;
-  background: #000;
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -349,7 +349,7 @@ a:hover{
   font-size: 36px;
   background: none;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   padding: 8px 16px;
 }
@@ -394,7 +394,7 @@ a:hover{
   font-size: 36px;
   background: none;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   line-height: 1;
 }
