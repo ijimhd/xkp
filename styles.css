@@ -360,12 +360,35 @@ a:hover{
 
 .publication-links{
   display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 4vh 15vw;
+  margin:0 auto;
+}
+
+.article{
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   gap: 10px;
-  font-size: 0.8em;
-  margin-top: 2vh
+  max-width: 33vw;
+}
+
+.article-image{
+  max-width: 33vw;
+  border-radius: 8px;
+}
+
+.article-title{
+  font-size:0.7em;
+}
+
+.article-link{
+  font-size: 0.5em;
 }
 
 .publication-links a{
@@ -535,6 +558,10 @@ a:hover{
     align-items: flex-start;
   }
 
+  .article{
+    font-size: 0.6em;
+  }
+
   .gallery{
     gap: 5vw;
     margin-top: 17vw;
@@ -552,4 +579,25 @@ a:hover{
     margin-block: 13vw;
   }
 
+}
+
+@media (max-width: 500px) {
+  .publication-links{
+    padding: 2vh 8vw;
+  }
+  .article{
+    max-width:100%;
+  }
+
+  .article-title{
+    font-size: 0.9em;
+  }
+
+  .article-link{
+    font-size: 0.7em;
+  }
+
+  .article-image{
+    max-width: 100%;
+  }
 }
