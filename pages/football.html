@@ -19,22 +19,26 @@
               crossorigin>
         <link rel="icon" type="image/svg+xml" href="../jpg/assets/favicon.svg" />
         <script defer src="/js/dropdown.js"></script>
-        <script src="/js/script.js"></script>
     </head>
     <body>
         <div class="header-container">
-            <a class="header-logo-link" href="../index.html">
-                <img class="header-logo" src="../jpg/assets/header-logo.png" alt="Xkpfoto logo">
-            </a>
+            <a class="header-logo-link" href="../index.html">xkpfoto</a>
             <button class="mobile-menu-btn" id="menu-toggle" aria-label="Open Menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav-links" id="nav-list">
-                <li><a class="nav-link nav-item" href="../index.html">HOME</a></li>      
-                <li><a class="nav-link nav-item" href="./football.html">FOOTBALL</a></li>
-                <li><a class="nav-link nav-item" href="./basketball.html">BASKETBALL</a></li>
+            <ul class="nav-links" id="nav-list">      
+                <li><div class="dropdown-container" id="servicesDropdown">
+                    <a href="#" class="nav-link">SPORTS ▾</a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                            <a class="nav-link nav-item" href="./football.html">FOOTBALL</a>
+                            <a class="nav-link nav-item" href="./basketball.html">BASKETBALL</a>
+                        </div> 
+                    </div>
+                </div></li>
+                <li><a class="nav-link nav-item" href="./publications.html">PUBLICATIONS</a></li>
                 <li><div class="dropdown-container" id="servicesDropdown">
                     <a href="#" class="nav-link">CONTACT ▾</a>
                     <div class="dropdown-menu">
@@ -43,7 +47,8 @@
                             <a href="https://www.instagram.com/xkpfoto/" target="_blank" rel="noopener noreferrer">Instagram</a>
                         </div> 
                     </div>
-                </div></li>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="leagues">

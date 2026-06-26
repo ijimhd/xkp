@@ -6,8 +6,8 @@
 }
 
 body{
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   font-size: 23px;
   font-weight: 400;
 }
@@ -32,17 +32,13 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5vh 10vw;
+  padding: 4vh 15vw;
 }
 
 .links-container{
   display: flex;
   align-items: center;
   gap: 1em;
-}
-
-.header-logo{
-  width:100px;
 }
 
 .header-logo-link{
@@ -55,7 +51,7 @@ body{
     justify-content: space-between;
     align-items: center;
     background-color: #1a1a1a;
-    color: white;
+    color: black;
     padding: 0 5%;
     position: sticky;
     top: 0;
@@ -95,7 +91,7 @@ body{
 .mobile-menu-btn span {
     height: 3px;
     width: 100%;
-    background-color: white;
+    background-color: black;
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
 }
@@ -119,7 +115,7 @@ body{
 
 /* The container for the links */
 .dropdown-content {
-  background-color: #1a1a1a;
+  background-color: rgb(225, 225, 225);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
@@ -167,7 +163,7 @@ body{
 
 a{
   text-decoration: none;
-  color: white;
+  color: black;
   font-family: "FontTwo", sans-serif;
   font-weight: 400;
 }
@@ -176,33 +172,32 @@ a:hover{
   color: rgb(98, 98, 98);
 }
 
-.background {
-  /* Remove the background-image line */
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* Keep your other layout styles */
-}
-
 .home-page{
   position: relative;
   text-align: center;
 }
 
-.hero-text{
-  display: flex;
-  gap: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5em;
+.carousel {
+  position: relative;
+  width: auto;
+  height: 87vh; /* Adjust as needed */
+  overflow: hidden;
 }
 
-.hero-title{
-  font-family: "FontOne", serif;
+.carousel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+  object-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel img.active {
+  opacity: 1;
 }
 
 .sports-container{
@@ -299,6 +294,10 @@ a:hover{
   margin-block: 3vw;
 }
 
+.sports-categories{
+  display:none;
+}
+
 .leagues-content{
   padding: 0px;
 }
@@ -359,6 +358,20 @@ a:hover{
   opacity: 0.7;
 }
 
+.publication-links{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8em;
+  margin-top: 2vh
+}
+
+.publication-links a{
+  font-family: system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 /* Mobile lightbox sizing */
 @media (max-width: 768px) {
   .lightbox img {
@@ -394,13 +407,12 @@ a:hover{
 
   .header-container{
     padding: 2vh 8vw;
-  }
-
-  .hero-text{
-    align-items: center;
-    padding-top: 20vw;
-    font-size: 8vw;
-    gap: 2vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: transparent;
   }
 
   .header-container{
@@ -438,7 +450,8 @@ a:hover{
       position: fixed;
       top: 0;
       right: -100%; /* Hidden off-screen to the right */
-      background-color: black;
+      background-color: white;
+      color:black;
       width: 100%; /* Full screen width */
       height: 100vh;
       flex-direction: column;
@@ -499,7 +512,7 @@ a:hover{
     padding: 10vh;
   }
   .image {
-    width: 70vw;
+    width: 45vw;
   }
 
   .overlay{
@@ -511,6 +524,15 @@ a:hover{
     flex-direction: column;
     align-items: center;
     gap: 7vw;
+  }
+
+  .carousel{
+    margin-inline: 10px;
+  }
+
+  .publication-links{
+    margin-top: 10vh;
+    align-items: flex-start;
   }
 
   .gallery{
