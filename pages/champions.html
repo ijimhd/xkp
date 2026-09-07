@@ -223,7 +223,6 @@ function handleSwipe() {
 
 // ----- GALLERY INITIALIZATION -----
 document.addEventListener("DOMContentLoaded", () => {
-  // Check if the 'images' array exists from the gallery-*.js file
   if (typeof images === 'undefined' || !images.length) {
     console.error("No images array found. Check your script paths.");
     return;
@@ -233,43 +232,72 @@ document.addEventListener("DOMContentLoaded", () => {
   shuffled = shuffleArray([...images]);
 
   const fragment = document.createDocumentFragment();
+  const imgElements = []; // Keep track of created image elements
 
   shuffled.forEach((src, index) => {
     const img = document.createElement("img");
     
-    // 1. FAST LOAD: Show a tiny 20px version immediately
+    // 1. FAST LOAD: Show the tiny 20px version immediately
     img.src = netlifyImage(src, 20); 
     
-    // 2. STYLING: Add the blur and the fade transition
+    // 2. STYLING: Add the blur and fade transition
     img.style.filter = "blur(15px)";
     img.style.transition = "filter 0.6s ease-in-out";
     img.style.cursor = "zoom-in";
     img.className = "w-full h-auto rounded-lg shadow-md object-cover";
     
-    // 3. RESPONSIVE: Tell the browser which sizes are available
+    // 3. RESPONSIVE: Tell browser available sizes
     img.srcset = [400, 800, 1200, 1600]
       .map(w => `${netlifyImage(src, w)} ${w}w`)
       .join(", ");
     
-    // Match your grid layout (30vw for desktop, 95vw for mobile)
     img.sizes = "(max-width: 768px) 95vw, 30vw";
-    img.loading = "lazy";
-
-    // 4. SHARPEN: When the real image is ready, remove the blur
-    img.onload = () => {
-      // If the current src is just the 20px placeholder, don't unblur yet
-      if (img.naturalWidth > 20) {
-        img.style.filter = "blur(0)";
-      }
-    };
+    
+    // We handle loading manually to force top-to-bottom sequence
+    img.loading = "eager"; 
 
     img.addEventListener("click", () => openLightbox(index));
     fragment.appendChild(img);
+    imgElements.push({ img, src });
   });
 
-  // Clear existing content and append the new images
+  // Clear existing content and append the new images to DOM
   gallery.innerHTML = "";
   gallery.appendChild(fragment);
+
+  // 4. SEQUENTIAL LOADER: Load high-res images one-by-one from top to bottom
+  let currentIndexToLoad = 0;
+
+  function loadNextImage() {
+    if (currentIndexToLoad >= imgElements.length) return;
+
+    const { img, src } = imgElements[currentIndexToLoad];
+    currentIndexToLoad++;
+
+    const highResLoader = new Image();
+    // Request a good display size for the grid (e.g., 800px)
+    highResLoader.src = netlifyImage(src, 800);
+    
+    highResLoader.onload = () => {
+      // Apply the high-res source to the actual DOM element
+      img.src = highResLoader.src;
+      img.style.filter = "blur(0)";
+      
+      // Once this image is loaded and unblurred, immediately start the next one
+      loadNextImage();
+    };
+    
+    highResLoader.onerror = () => {
+      // If one fails, don't stall the whole queue; move to the next
+      loadNextImage();
+    };
+  }
+
+  // Kick off the queue with the first few images simultaneously (e.g., top row of 3) 
+  // so it's fast, but they still resolve downward.
+  for (let i = 0; i < Math.min(3, imgElements.length); i++) {
+    loadNextImage();
+  }
 });
 
         </script>
