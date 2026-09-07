@@ -235,6 +235,7 @@ a:hover{
   opacity: 0;
   transition: .5s ease;
   background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
 }
 
 .container:hover .overlay {
@@ -281,7 +282,7 @@ a:hover{
   height: auto;
   display: block;
   object-fit: cover;
-  border-radius: 8px; /* optional rounded corners */
+  border-radius: 10px; /* optional rounded corners */
 }
 
 .leagues,
@@ -326,7 +327,7 @@ a:hover{
   max-width: 70vw;
   max-height: 85vh;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: opacity 0.4s ease, filter 0.4s ease;
   touch-action: pan-y; /* allow vertical scroll but capture horizontal swipe */
   user-select: none;
@@ -380,7 +381,7 @@ a:hover{
 
 .article-image{
   max-width: 33vw;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .article-title{
