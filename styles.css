@@ -377,6 +377,14 @@ a:hover{
   text-align: center;
   gap: 10px;
   max-width: 33vw;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.article.loaded {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .article-image{
