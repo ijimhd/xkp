@@ -364,7 +364,7 @@ a:hover{
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 25px;
   padding: 4vh 15vw;
   margin:0 auto;
 }
@@ -386,10 +386,6 @@ a:hover{
 
 .article-title{
   font-size:0.7em;
-}
-
-.article-link{
-  font-size: 0.5em;
 }
 
 .publication-links a{
@@ -593,10 +589,6 @@ a:hover{
 
   .article-title{
     font-size: 0.9em;
-  }
-
-  .article-link{
-    font-size: 0.7em;
   }
 
   .article-image{
