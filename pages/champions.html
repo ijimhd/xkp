@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
   shuffled = shuffleArray([...images]);
 
   const fragment = document.createDocumentFragment();
-  const imgElements = []; // Keep track of created image elements
+  const imgElements = [];
 
   shuffled.forEach((src, index) => {
     const img = document.createElement("img");
@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. FAST LOAD: Show the tiny 20px version immediately
     img.src = netlifyImage(src, 20); 
     
-    // 2. STYLING: Add the blur and fade transition
+    // 2. STYLING: Add blur and fade transition
     img.style.filter = "blur(15px)";
     img.style.transition = "filter 0.6s ease-in-out";
     img.style.cursor = "zoom-in";
@@ -252,8 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .join(", ");
     
     img.sizes = "(max-width: 768px) 95vw, 30vw";
-    
-    // We handle loading manually to force top-to-bottom sequence
     img.loading = "eager"; 
 
     img.addEventListener("click", () => openLightbox(index));
@@ -265,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
   gallery.innerHTML = "";
   gallery.appendChild(fragment);
 
-  // 4. SEQUENTIAL LOADER: Load high-res images one-by-one from top to bottom
+  // 4. STRICT SEQUENTIAL LOADER: Load one by one from top to bottom
   let currentIndexToLoad = 0;
 
   function loadNextImage() {
@@ -275,29 +273,23 @@ document.addEventListener("DOMContentLoaded", () => {
     currentIndexToLoad++;
 
     const highResLoader = new Image();
-    // Request a good display size for the grid (e.g., 800px)
     highResLoader.src = netlifyImage(src, 800);
     
     highResLoader.onload = () => {
-      // Apply the high-res source to the actual DOM element
       img.src = highResLoader.src;
       img.style.filter = "blur(0)";
       
-      // Once this image is loaded and unblurred, immediately start the next one
+      // ONLY start the next image once the current one is fully loaded and unblurred
       loadNextImage();
     };
     
     highResLoader.onerror = () => {
-      // If one fails, don't stall the whole queue; move to the next
       loadNextImage();
     };
   }
 
-  // Kick off the queue with the first few images simultaneously (e.g., top row of 3) 
-  // so it's fast, but they still resolve downward.
-  for (let i = 0; i < Math.min(3, imgElements.length); i++) {
-    loadNextImage();
-  }
+  // Kick off the queue with strictly ONE image to start the chain
+  loadNextImage();
 });
 
         </script>
